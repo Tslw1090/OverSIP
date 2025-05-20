@@ -1,9 +1,12 @@
-FROM debian:bullseye
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-    apt-get install -y build-essential git libev-dev libssl-dev ruby ruby-dev libsqlite3-dev libevent-dev && \
+    apt-get install -y curl gnupg build-essential ruby ruby-dev libssl-dev libsqlite3-dev && \
+    gem install bundler && \
     gem install oversip
 
-COPY etc/oversip.conf /etc/oversip.conf
+COPY oversip.conf /etc/oversip.conf
 
 CMD ["oversip", "--config", "/etc/oversip.conf"]
